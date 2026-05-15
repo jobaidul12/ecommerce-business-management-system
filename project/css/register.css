@@ -1,0 +1,169 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
+
+
+body{
+    background: linear-gradient(135deg, #ffdde1, #ee9ca7);
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    overflow-y: auto;        /* ← এটা add করো */
+}
+
+.register-box{
+    display: flex;
+    background: #fff;
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+    width: 100%;             /* ← এটা add করো */
+}
+
+.container{
+    width: 100%;
+    max-width: 1100px;
+}
+
+
+.left-side{
+    width: 45%;
+    background: linear-gradient(135deg, #ff4b6e, #ff758c);
+    color: white;
+    padding: 60px 40px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.left-side h1{
+    font-size: 40px;
+    margin-bottom: 20px;
+    font-weight: 700;
+}
+
+.left-side p{
+    font-size: 16px;
+    line-height: 1.7;
+}
+
+.right-side{
+    width: 55%;
+    padding: 50px 40px;
+}
+
+.right-side h2{
+    text-align: center;
+    margin-bottom: 30px;
+    color: #333;
+    font-size: 30px;
+}
+
+.input-group{
+    margin-bottom: 20px;
+}
+
+.input-group label{
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 500;
+    color: #444;
+}
+
+.input-group input{
+    width: 100%;
+    padding: 14px 15px;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    outline: none;
+    font-size: 15px;
+    transition: 0.3s;
+}
+
+.input-group input:focus{
+    border-color: #ff4b6e;
+    box-shadow: 0 0 8px rgba(255,75,110,0.3);
+}
+
+.register-btn{
+    width: 100%;
+    padding: 14px;
+    border: none;
+    border-radius: 10px;
+    background: linear-gradient(135deg, #ff4b6e, #ff758c);
+    color: white;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.register-btn:hover{
+    opacity: 0.9;
+    transform: translateY(-2px);
+}
+
+.login-text{
+    text-align: center;
+    margin-top: 20px;
+    color: #555;
+}
+
+.login-text a{
+    color: #ff4b6e;
+    text-decoration: none;
+    font-weight: 600;
+}
+
+.login-text a:hover{
+    text-decoration: underline;
+}
+
+/* Responsive */
+
+@media(max-width: 900px){
+
+    .register-box{
+        flex-direction: column;
+    }
+
+    .left-side,
+    .right-side{
+        width: 100%;
+    }
+
+    .left-side{
+        text-align: center;
+        padding: 40px 20px;
+    }
+
+    .left-side h1{
+        font-size: 32px;
+    }
+
+    .right-side{
+        padding: 40px 25px;
+    }
+
+}
+
+@media(max-width: 500px){
+
+    .right-side h2{
+        font-size: 24px;
+    }
+
+    .input-group input{
+        padding: 12px;
+    }
+
+    .register-btn{
+        padding: 12px;
+    }
+
+}

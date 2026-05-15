@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Profile | Ranga Dhaga</title>
+    <link rel="stylesheet" href="css/profile.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+</head>
+<body>
+
+<!-- ==================== NAVBAR ==================== -->
+<nav class="navbar">
+    <div class="nav-container">
+        <a href="index.html" class="logo">
+            <span class="logo-icon">🪡</span>
+            <div>
+                <span class="logo-main">Ranga Dhaga</span>
+                <span class="logo-sub">Fashion House</span>
+            </div>
+        </a>
+        <div class="nav-right">
+            <a href="index.html" class="nav-back-btn">
+                <i class="fas fa-arrow-left"></i> Back to Shop
+            </a>
+            <a href="php/logout.php" class="nav-logout-btn">
+                <i class="fas fa-sign-out-alt"></i> Logout
+            </a>
+        </div>
+    </div>
+</nav>
+
+<!-- ==================== PROFILE PAGE ==================== -->
+<div class="profile-page">
+
+    <!-- ── SIDEBAR ── -->
+    <aside class="profile-sidebar">
+        <div class="sidebar-banner"></div>
+        <div class="sidebar-body">
+            <div class="avatar-circle" id="avatarCircle">–</div>
+            <h2 class="sidebar-name" id="sidebarName">
+                <span class="skeleton" style="width:140px;height:22px;display:inline-block;border-radius:6px;"></span>
+            </h2>
+            <p class="sidebar-email" id="sidebarEmail">
+                <span class="skeleton" style="width:180px;height:14px;display:inline-block;border-radius:4px;"></span>
+            </p>
+            <hr class="sidebar-divider">
+            <div class="sidebar-stat">
+                <div class="stat-box">
+                    <strong id="totalOrders">—</strong>
+                    <span>Orders</span>
+                </div>
+                <div class="stat-box">
+                    <strong id="totalSpent">—</strong>
+                    <span>Spent</span>
+                </div>
+                <div class="stat-box">
+                    <strong id="deliveredCount">—</strong>
+                    <span>Delivered</span>
+                </div>
+            </div>
+            <div class="sidebar-info-item">
+                <i class="fas fa-phone"></i>
+                <div>
+                    <strong>Phone</strong>
+                    <span id="sidebarPhone">—</span>
+                </div>
+            </div>
+            <div class="sidebar-info-item">
+                <i class="fas fa-calendar-alt"></i>
+                <div>
+                    <strong>Member Since</strong>
+                    <span id="sidebarMember">—</span>
+                </div>
+            </div>
+        </div>
+    </aside>
+
+    <!-- ── MAIN ── -->
+    <main class="profile-main">
+
+        <!-- Tabs -->
+        <div class="profile-tabs">
+            <button class="tab-btn active" onclick="switchTab('info', this)">
+                <i class="fas fa-id-card"></i> Profile Info
+            </button>
+            <button class="tab-btn" onclick="switchTab('orders', this)">
+                <i class="fas fa-box"></i> Order History
+            </button>
+        </div>
+
+        <!-- ── Profile Info Panel ── -->
+        <div class="tab-panel active" id="panel-info">
+            <div class="info-card">
+                <h3 class="info-card-title"><i class="fas fa-user-circle"></i> Personal Information</h3>
+                <div class="info-grid">
+                    <div class="info-field">
+                        <label>Full Name</label>
+                        <p id="infoName">—</p>
+                    </div>
+                    <div class="info-field">
+                        <label>Email Address</label>
+                        <p id="infoEmail">—</p>
+                    </div>
+                    <div class="info-field">
+                        <label>Phone Number</label>
+                        <p id="infoPhone">—</p>
+                    </div>
+                    <div class="info-field">
+                        <label>Member Since</label>
+                        <p id="infoMember">—</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="info-card">
+                <h3 class="info-card-title"><i class="fas fa-shield-alt"></i> Account Security</h3>
+                <div class="info-grid">
+                    <div class="info-field">
+                        <label>Password</label>
+                        <p>••••••••••••</p>
+                    </div>
+                    <div class="info-field">
+                        <label>Account Status</label>
+                        <p style="color:#16a34a;font-weight:700;">✔ Active</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ── Order History Panel ── -->
+        <div class="tab-panel" id="panel-orders">
+            <div class="orders-header">
+                <h2 class="orders-title">Order History</h2>
+                <span class="orders-count" id="ordersCount">0 orders</span>
+            </div>
+            <div id="ordersContainer">
+                <!-- Orders rendered by JS -->
+                <div class="empty-orders" id="ordersLoading">
+                    <div class="skeleton" style="height:80px;border-radius:12px;margin-bottom:16px;"></div>
+                    <div class="skeleton" style="height:80px;border-radius:12px;margin-bottom:16px;"></div>
+                    <div class="skeleton" style="height:80px;border-radius:12px;"></div>
+                </div>
+            </div>
+        </div>
+
+    </main>
+</div>
+
+<!-- ==================== JS ==================== -->
+<script>
+
+    const STATUS_STEPS = ['Pending', 'Confirmed', 'Processing', 'Shipped', 'Delivered'];
+    const STATUS_ICONS = {
+        Pending:    'fa-clock',
+        Confirmed:  'fa-check',
+        Processing: 'fa-cog',
+        Shipped:    'fa-truck',
+        Delivered:  'fa-box-open',
+        Cancelled:  'fa-times'
+    };
+
+    // ── Tab switching ──
+    function switchTab(tab, btn) {
+        document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+        document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+        btn.classList.add('active');
+        document.getElementById('panel-' + tab).classList.add('active');
+    }
+
+    // ── Format date ──
+    function formatDate(dateStr) {
+        if (!dateStr) return '—';
+        const d = new Date(dateStr);
+        return d.toLocaleDateString('en-BD', { year:'numeric', month:'long', day:'numeric' });
+    }
+
+    // ── Get initials ──
+    function getInitials(name) {
+        return name.split(' ').map(w => w[0]).join('').toUpperCase().slice(0, 2);
+    }
+
+    // ── Build status timeline HTML ──
+    function buildTimeline(status) {
+        if (status === 'Cancelled') {
+            return `<div style="display:flex;align-items:center;gap:8px;color:#dc2626;font-size:14px;font-weight:600;padding:10px 0;">
+                        <i class="fas fa-times-circle"></i> This order was cancelled.
+                    </div>`;
+        }
+        const currentIdx = STATUS_STEPS.indexOf(status);
+        return `<div class="status-timeline">` +
+            STATUS_STEPS.map((step, i) => {
+                let cls = '';
+                if (i < currentIdx) cls = 'done';
+                else if (i === currentIdx) cls = 'done current';
+                return `<div class="timeline-step ${cls}">
+                    <div class="step-dot"><i class="fas ${STATUS_ICONS[step]}"></i></div>
+                    <span class="step-label">${step}</span>
+                </div>`;
+            }).join('') +
+        `</div>`;
+    }
+
+    // ── Render a single order card ──
+    function renderOrder(order) {
+        const items = order.items || [];
+        const itemsHTML = items.map(item => `
+            <div class="order-item-row">
+                <span class="order-item-emoji">
+                    ${item.product_img
+                        ? `<img src="images/${item.product_img}" alt="${item.product_name}" style="width:44px;height:44px;object-fit:cover;border-radius:8px;">`
+                        : '🛍️'}
+                </span>
+                <span class="order-item-name">${item.product_name}</span>
+                <span class="order-item-qty">× ${item.quantity}</span>
+                <span class="order-item-price">৳${parseFloat(item.price * item.quantity).toLocaleString()}</span>
+            </div>
+        `).join('');
+
+        return `
+        <div class="order-card">
+            <div class="order-card-header">
+                <div>
+                    <div class="order-number"><i class="fas fa-receipt"></i> ${order.order_number}</div>
+                    <div class="order-date">${formatDate(order.created_at)}</div>
+                </div>
+                <span class="status-badge status-${order.status}">
+                    <i class="fas ${STATUS_ICONS[order.status] || 'fa-circle'}"></i> ${order.status}
+                </span>
+            </div>
+            <div class="order-card-body">
+                ${buildTimeline(order.status)}
+                <div class="order-items-list">${itemsHTML || '<p style="color:var(--text-light);font-size:14px;">No item details</p>'}</div>
+                <div class="order-footer">
+                    <div class="order-delivery-info">
+                        <div><i class="fas fa-map-marker-alt"></i>${order.address}</div>
+                        <div style="margin-top:4px;"><i class="fas fa-phone"></i>${order.phone}</div>
+                        <div style="margin-top:4px;"><i class="fas fa-money-bill-wave"></i>${order.payment_method}</div>
+                    </div>
+                    <div class="order-total-area">
+                        <div class="order-total-label">
+                            Subtotal ৳${parseFloat(order.subtotal).toLocaleString()} + 
+                            Delivery ৳${parseFloat(order.delivery_charge).toLocaleString()}
+                        </div>
+                        <div class="order-total-amount">৳${parseFloat(order.total).toLocaleString()}</div>
+                    </div>
+                </div>
+            </div>
+        </div>`;
+    }
+
+    // ── Load profile data ──
+    function loadProfile() {
+        fetch('php/get_profile.php')
+        .then(r => r.json())
+        .then(data => {
+            if (!data.success) {
+                window.location.href = 'login.html';
+                return;
+            }
+            const u = data.user;
+            const initials = getInitials(u.fullname);
+            document.getElementById('avatarCircle').textContent  = initials;
+            document.getElementById('sidebarName').textContent   = u.fullname;
+            document.getElementById('sidebarEmail').textContent  = u.email;
+            document.getElementById('sidebarPhone').textContent  = u.phone || '—';
+            document.getElementById('sidebarMember').textContent = formatDate(u.created_at);
+            document.getElementById('infoName').textContent      = u.fullname;
+            document.getElementById('infoEmail').textContent     = u.email;
+            document.getElementById('infoPhone').textContent     = u.phone || '—';
+            document.getElementById('infoMember').textContent    = formatDate(u.created_at);
+            document.title = u.fullname + ' | Ranga Dhaga';
+        })
+        .catch(() => { window.location.href = 'login.html'; });
+    }
+
+    // ── Load orders ──
+    function loadOrders() {
+        fetch('php/get_orders.php')
+        .then(r => r.json())
+        .then(data => {
+            const container = document.getElementById('ordersContainer');
+            if (!data.success) {
+                container.innerHTML = `<div class="empty-orders">
+                    <div class="empty-icon">⚠️</div>
+                    <h3>Could not load orders</h3>
+                    <p>${data.message}</p>
+                </div>`;
+                return;
+            }
+            const orders = data.orders || [];
+            document.getElementById('ordersCount').textContent = orders.length + ' order' + (orders.length !== 1 ? 's' : '');
+
+            // Sidebar stats
+            const spent     = orders.reduce((s, o) => s + parseFloat(o.total), 0);
+            const delivered = orders.filter(o => o.status === 'Delivered').length;
+            document.getElementById('totalOrders').textContent   = orders.length;
+            document.getElementById('totalSpent').textContent    = '৳' + Math.round(spent / 1000) + 'k';
+            document.getElementById('deliveredCount').textContent = delivered;
+
+            if (orders.length === 0) {
+                container.innerHTML = `<div class="empty-orders">
+                    <div class="empty-icon">🛍️</div>
+                    <h3>No orders yet</h3>
+                    <p>You haven't placed any orders. Browse our collection and start shopping!</p>
+                    <a href="index.html" class="btn-primary"><i class="fas fa-shopping-bag"></i> Shop Now</a>
+                </div>`;
+                return;
+            }
+            container.innerHTML = orders.map(renderOrder).join('');
+        })
+        .catch(() => {
+            document.getElementById('ordersContainer').innerHTML = `<div class="empty-orders">
+                <div class="empty-icon">⚠️</div>
+                <h3>Failed to load orders</h3>
+                <p>Please refresh the page.</p>
+            </div>`;
+        });
+    }
+
+    // ── Init ──
+    loadProfile();
+    loadOrders();
+
+</script>
+</body>
+</html>

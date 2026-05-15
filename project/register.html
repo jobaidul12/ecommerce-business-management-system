@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register | Fashion Store</title>
+
+    <!-- CSS File -->
+    <link rel="stylesheet" href="css/register.css">
+
+    <!-- Google Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <div class="container">
+
+        <div class="register-box">
+
+            <div class="left-side">
+                <h1>Fashion Store</h1>
+                <p>Create your account and start shopping stylish Saree & Panjabi collections.</p>
+            </div>
+
+            <div class="right-side">
+
+                <h2>Create Account</h2>
+
+                <form action="php/register.php" method="POST">
+
+                    <div class="input-group">
+                        <label>Full Name</label>
+                        <input type="text" name="fullname" placeholder="Enter your full name" required>
+                    </div>
+
+                    <div class="input-group">
+                        <label>Email Address</label>
+                        <input type="email" name="email" placeholder="Enter your email" required>
+                    </div>
+
+                    <div class="input-group">
+                        <label>Phone Number</label>
+                        <input type="text" name="phone" placeholder="Enter your phone number" required>
+                    </div>
+
+                    <div class="input-group">
+                        <label>Password</label>
+                        <input type="password" name="password" placeholder="Create password" required>
+                    </div>
+
+                    <div class="input-group">
+                        <label>Confirm Password</label>
+                        <input type="password" name="confirm_password" placeholder="Confirm password" required>
+                    </div>
+
+                    <button type="submit" class="register-btn">
+                        Register
+                    </button>
+
+                    <p class="login-text">
+                        Already have an account?
+                        <a href="login.html">Login</a>
+                    </p>
+
+                </form>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</body>
+</html>

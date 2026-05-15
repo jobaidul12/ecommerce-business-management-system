@@ -1,0 +1,809 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ShajBari | Saree & Panjabi Collection</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <style>
+        /* ── User Dropdown (session-aware navbar) ── */
+        .user-menu { position: relative; }
+        .nav-user-dropdown { position: relative; }
+        .user-dropdown-menu {
+            display: none;
+            position: absolute;
+            top: calc(100% + 12px);
+            right: 0;
+            background: #fff;
+            border-radius: 14px;
+            box-shadow: 0 8px 30px rgba(0,0,0,0.13);
+            min-width: 190px;
+            overflow: hidden;
+            z-index: 999;
+            border: 1px solid #f0e0e5;
+        }
+        .user-dropdown-menu.open { display: block; }
+        .dropdown-username {
+            padding: 14px 16px 10px;
+            font-weight: 700;
+            font-size: 14px;
+            color: #1a1a2e;
+            border-bottom: 1px solid #f0e0e5;
+            background: #fdf6f8;
+        }
+        .user-dropdown-menu a {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 12px 16px;
+            font-size: 14px;
+            color: #444;
+            text-decoration: none;
+            transition: background .2s;
+        }
+        .user-dropdown-menu a:hover { background: #fdf6f8; color: #c44569; }
+        .user-dropdown-menu a i { width: 16px; color: #c44569; }
+        .nav-login-btn { display: flex; align-items: center; }
+    </style>
+</head>
+<body>
+
+<!-- ==================== NAVBAR ==================== -->
+<nav class="navbar" id="navbar">
+    <div class="nav-container">
+
+        <a href="index.html" class="logo">
+            <span class="logo-icon">🪡</span>
+            <div>
+                <span class="logo-main">ShajBari</span>
+                <span class="logo-sub">Fashion House</span>
+            </div>
+        </a>
+
+        <ul class="nav-links" id="navLinks">
+            <li><a href="#home">Home</a></li>
+            <li class="dropdown">
+                <a href="#saree">Saree <i class="fas fa-chevron-down"></i></a>
+                <ul class="dropdown-menu">
+                    <li><a href="#" onclick="filterProducts('jamdani')"><span></span> Jamdani Saree</a></li>
+                    <li><a href="#" onclick="filterProducts('silk')"><span></span> Silk Saree</a></li>
+                </ul>
+            </li>
+            <li class="dropdown">
+                <a href="#panjabi">Panjabi <i class="fas fa-chevron-down"></i></a>
+                <ul class="dropdown-menu">
+                    <li><a href="#" onclick="filterProducts('cotton-panjabi')"><span></span> Cotton Panjabi</a></li>
+                    <li><a href="#" onclick="filterProducts('embroidered-panjabi')"><span></span> Embroidered Panjabi</a></li>
+                </ul>
+            </li>
+            <li><a href="#about">About</a></li>
+            <li><a href="#contact">Contact</a></li>
+        </ul>
+
+        <div class="nav-actions">
+            <button class="search-toggle" onclick="toggleSearch()" title="Search">
+                <i class="fas fa-search"></i>
+            </button>
+            <button class="cart-btn" onclick="toggleCart()" title="Cart">
+                <i class="fas fa-shopping-bag"></i>
+                <span class="cart-count" id="cartCount">0</span>
+            </button>
+            <!-- User menu: updated by JS after session check -->
+            <div class="user-menu" id="userMenu">
+                <a href="login.html" class="nav-login-btn" title="Login">
+                    <i class="fas fa-user"></i>
+                </a>
+            </div>
+            <button class="hamburger" id="hamburger" onclick="toggleMenu()">
+                <span></span><span></span><span></span>
+            </button>
+        </div>
+
+    </div>
+
+    <!-- Search Bar -->
+    <div class="search-bar" id="searchBar">
+        <div class="search-container">
+            <i class="fas fa-search"></i>
+            <input type="text" id="searchInput" placeholder="Search saree, panjabi, color..." oninput="searchProducts()">
+            <button onclick="closeSearch()"><i class="fas fa-times"></i></button>
+        </div>
+    </div>
+</nav>
+
+<!-- ==================== HERO ==================== -->
+<section class="hero" id="home">
+    <div class="hero-bg"></div>
+    <div class="hero-content">
+        <p class="hero-eyebrow">New Collection 2025</p>
+        <h1 class="hero-title">Wear the<br><em>Colors of</em><br>Tradition</h1>
+        <p class="hero-desc">Handpicked Saree & Panjabi collections — crafted for elegance, made for you.</p>
+        <div class="hero-btns">
+            <a href="#saree" class="btn-primary" onclick="scrollToProducts()">Shop Now</a>
+            <a href="#about" class="btn-outline">Our Story</a>
+        </div>
+        <div class="hero-stats">
+            <div><strong>500+</strong><span>Products</span></div>
+            <div><strong>10K+</strong><span>Customers</span></div>
+            <div><strong>4.9★</strong><span>Rating</span></div>
+        </div>
+    </div>
+    <div class="hero-visual">
+        <div class="hero-card hero-card-1">
+            <div class="hero-card-img" style="background: linear-gradient(135deg,#ff6b9d,#c44569)">
+                <img src="images/jamdani1.jpg" alt="Jamdani">
+            </div>
+            
+        </div>
+        <div class="hero-card hero-card-2">
+            <div class="hero-card-img" style="background: linear-gradient(135deg,#a8edea,#fed6e3)">
+                <img src="images/benaroshi1.jpg" alt="Benaroshi">
+            </div>
+
+        </div>
+        <div class="hero-card hero-card-3">
+            <div class="hero-card-img" style="background: linear-gradient(135deg,#d4fc79,#96e6a1)">
+                <img src="images/embroydary3.jpg" alt="Panjabi">
+            </div>
+            
+        </div>
+    </div>
+</section>
+
+<!-- ==================== CATEGORY TABS ==================== -->
+<section class="products-section" id="products">
+    <div class="section-container">
+        <div class="section-header">
+            <p class="section-eyebrow">Our Collections</p>
+            <h2 class="section-title">Explore Products</h2>
+        </div>
+
+        <div class="filter-tabs">
+            <button class="tab active" onclick="filterProducts('all', this)">All Products</button>
+            <button class="tab" onclick="filterProducts('jamdani', this)"> Jamdani Saree</button>
+            <button class="tab" onclick="filterProducts('silk', this)"> Silk Saree</button>
+            <button class="tab" onclick="filterProducts('cotton-panjabi', this)"> Cotton Panjabi</button>
+            <button class="tab" onclick="filterProducts('embroidered-panjabi', this)"> Embroidered Panjabi</button>
+        </div>
+
+        <div class="no-results" id="noResults" style="display:none">
+            <i class="fas fa-search"></i>
+            <p>No products found. Try a different search.</p>
+        </div>
+
+        <div class="products-grid" id="productsGrid">
+            <!-- Products injected by JS -->
+        </div>
+    </div>
+</section>
+
+<!-- ==================== FEATURES ==================== -->
+<section class="features-section">
+    <div class="section-container">
+        <div class="features-grid">
+            <div class="feature-card">
+                <div class="feature-icon"><i class="fas fa-truck"></i></div>
+                <h3>Home Delivery</h3>
+                <p>Delivery available all over Bangladesh. Dhaka ৳60 | Outside ৳120</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon"><i class="fas fa-money-bill-wave"></i></div>
+                <h3>Cash on Delivery</h3>
+                <p>Pay when you receive your order. 100% safe and convenient.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon"><i class="fas fa-star"></i></div>
+                <h3>Premium Quality</h3>
+                <p>Every product is quality-checked before shipping.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon"><i class="fas fa-headset"></i></div>
+                <h3>24/7 Support</h3>
+                <p>Our team is always ready to help you anytime.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ==================== ABOUT ==================== -->
+<section class="about-section" id="about">
+    <div class="section-container">
+        <div class="about-grid">
+            <div class="about-visual">
+                <div class="about-img-box">
+                    <span style="font-size:120px">🪡</span>
+                </div>
+            </div>
+            <div class="about-content">
+                <p class="section-eyebrow">Our Story</p>
+                <h2>Tradition Meets<br><em>Modern Style</em></h2>
+                <p>Ranga Dhaga was born from a love for Bangladesh's rich textile heritage. We bring you the finest Jamdani, Silk Sarees and handcrafted Panjabis — directly from the weavers to your doorstep.</p>
+                <p>Every thread tells a story. Every color carries a tradition. We are proud to keep that tradition alive.</p>
+                <a href="#products" class="btn-primary">Browse Collection</a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ==================== CONTACT ==================== -->
+<section class="contact-section" id="contact">
+    <div class="section-container">
+        <div class="section-header">
+            <p class="section-eyebrow">Get In Touch</p>
+            <h2 class="section-title">Contact Us</h2>
+        </div>
+        <div class="contact-grid">
+            <div class="contact-info">
+                <div class="contact-item">
+                    <i class="fas fa-phone"></i>
+                    <div>
+                        <strong>Phone</strong>
+                        <p>+880 1882-643313</p>
+                    </div>
+                </div>
+                <div class="contact-item">
+                    <i class="fas fa-envelope"></i>
+                    <div>
+                        <strong>Email</strong>
+                        <p>info@shajbari.com</p>
+                    </div>
+                </div>
+                <div class="contact-item">
+                    <i class="fas fa-map-marker-alt"></i>
+                    <div>
+                        <strong>Address</strong>
+                        <p>Banani, Dhaka, Bangladesh</p>
+                    </div>
+                </div>
+                <div class="social-links">
+                    <a href="#"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-whatsapp"></i></a>
+                </div>
+            </div>
+            <!-- Contact form — connected to php/contact.php via fetch -->
+            <form class="contact-form" id="contactForm" onsubmit="submitContact(event)">
+                <input type="text"  name="name"    placeholder="Your Name"    required>
+                <input type="email" name="email"   placeholder="Your Email"   required>
+                <textarea           name="message" placeholder="Your Message" rows="5" required></textarea>
+                <button type="submit" class="btn-primary" id="contactBtn">Send Message</button>
+            </form>
+        </div>
+    </div>
+</section>
+
+<!-- ==================== FOOTER ==================== -->
+<footer class="footer">
+    <div class="section-container">
+        <div class="footer-grid">
+            <div class="footer-brand">
+                <a href="#" class="logo">
+                    <span class="logo-icon">🪡</span>
+                    <div>
+                        <span class="logo-main">ShajBari</span>
+                        <span class="logo-sub">Fashion House</span>
+                    </div>
+                </a>
+                <p>Bringing Bangladesh's finest textile heritage to your doorstep since 2024.</p>
+            </div>
+            <div class="footer-links">
+                <h4>Quick Links</h4>
+                <ul>
+                    <li><a href="#home">Home</a></li>
+                    <li><a href="#products">Products</a></li>
+                    <li><a href="#about">About Us</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                </ul>
+            </div>
+            <div class="footer-links">
+                <h4>Categories</h4>
+                <ul>
+                    <li><a href="#">Jamdani Saree</a></li>
+                    <li><a href="#">Silk Saree</a></li>
+                    <li><a href="#">Cotton Panjabi</a></li>
+                    <li><a href="#">Embroidered Panjabi</a></li>
+                </ul>
+            </div>
+            <div class="footer-links">
+                <h4>Policy</h4>
+                <ul>
+                    <li><a href="#">Return Policy</a></li>
+                    <li><a href="#">Privacy Policy</a></li>
+                    <li><a href="#">Delivery Info</a></li>
+                    <li><a href="#">FAQ</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>© 2024 ShajBari. All rights reserved.</p>
+            <p>Made with Love ❤️ in Bangladesh</p>
+        </div>
+    </div>
+</footer>
+
+<!-- ==================== CART SIDEBAR ==================== -->
+<div class="cart-overlay" id="cartOverlay" onclick="toggleCart()"></div>
+<div class="cart-sidebar" id="cartSidebar">
+    <div class="cart-header">
+        <h3><i class="fas fa-shopping-bag"></i> Your Cart</h3>
+        <button onclick="toggleCart()"><i class="fas fa-times"></i></button>
+    </div>
+    <div class="cart-items" id="cartItems">
+        <div class="cart-empty">
+            <i class="fas fa-shopping-bag"></i>
+            <p>Your cart is empty</p>
+        </div>
+    </div>
+    <div class="cart-footer" id="cartFooter" style="display:none">
+        <div class="cart-summary">
+            <div class="summary-row">
+                <span>Subtotal</span>
+                <span id="cartSubtotal">৳0</span>
+            </div>
+            <div class="summary-row">
+                <span>Delivery Charge</span>
+                <span id="deliveryCharge">৳60</span>
+            </div>
+            <div class="summary-row total">
+                <span>Total</span>
+                <span id="cartTotal">৳60</span>
+            </div>
+        </div>
+
+        <div class="delivery-options">
+            <p><strong>Delivery Area:</strong></p>
+            <label class="radio-label">
+                <input type="radio" name="delivery" value="60" checked onchange="updateDelivery(this)">
+                Inside Dhaka — ৳60
+            </label>
+            <label class="radio-label">
+                <input type="radio" name="delivery" value="120" onchange="updateDelivery(this)">
+                Outside Dhaka — ৳120
+            </label>
+        </div>
+
+        <div class="order-form">
+            <p><strong>Delivery Info:</strong></p>
+            <input type="text" id="orderName"    placeholder="Your Full Name"       required>
+            <input type="text" id="orderPhone"   placeholder="Phone Number"         required>
+            <textarea         id="orderAddress"  placeholder="Full Delivery Address" rows="3" required></textarea>
+        </div>
+
+        <div class="payment-badge">
+            <i class="fas fa-money-bill-wave"></i>
+            <span>Cash on Delivery Only</span>
+        </div>
+
+        <button class="checkout-btn" onclick="placeOrder()">
+            <i class="fas fa-check-circle"></i> Place Order
+        </button>
+    </div>
+</div>
+
+<!-- ==================== PRODUCT MODAL ==================== -->
+<div class="modal-overlay" id="modalOverlay" onclick="closeModal()"></div>
+<div class="product-modal" id="productModal">
+    <button class="modal-close" onclick="closeModal()"><i class="fas fa-times"></i></button>
+    <div class="modal-content" id="modalContent"></div>
+</div>
+
+<!-- ==================== TOAST ==================== -->
+<div class="toast" id="toast"></div>
+
+<!-- ==================== JS ==================== -->
+<script>
+
+// ===== PRODUCT DATA =====
+const products = [
+    { id:1, name:"Royal Jamdani Saree", category:"jamdani", price:3500, oldPrice:4200, img:"jamdani1.jpg", color:"#ff6b9d", badge:"Bestseller",
+      desc:"Premium handwoven Jamdani saree from Narayanganj. Features intricate floral motifs in vibrant red and gold thread. Perfect for Eid, Puja, and wedding occasions.", material:"100% Cotton", size:"6 meters", care:"Dry clean only" },
+    { id:2, name:"Pink Blossom Jamdani", category:"jamdani", price:4200, oldPrice:5000, img:"jamdani2.jpg", color:"#f093fb", badge:"New",
+      desc:"Elegant pink Jamdani with delicate blossom patterns. Lightweight and breathable, perfect for summer festivals and casual occasions.", material:"Cotton blend", size:"6 meters", care:"Hand wash cold" },
+    { id:3, name:"Golden Silk Saree", category:"silk", price:6500, oldPrice:8000, img:"benaroshi1.jpg", color:"#f7971e", badge:"Premium",
+      desc:"Luxurious Rajshahi silk saree with zari border work. Rich gold color with intricate weaving. A timeless piece for brides and special occasions.", material:"Pure Silk", size:"6.5 meters", care:"Dry clean only" },
+    { id:4, name:"Royal Blue Silk Saree", category:"silk", price:5800, oldPrice:7000, img:"benaroshi2.jpg", color:"#4facfe", badge:"Hot",
+      desc:"Stunning royal blue silk saree with silver thread work. Modern cut with traditional elegance. Ideal for evening events and formal occasions.", material:"Pure Silk", size:"6.5 meters", care:"Dry clean only" },
+    { id:5, name:"Classic White Cotton Panjabi", category:"cotton-panjabi", price:1800, oldPrice:2200, img:"cotton1.jpg", color:"#a8edea", badge:"Bestseller",
+      desc:"Comfortable everyday white cotton Panjabi with simple collar design. Breathable fabric, perfect for daily wear and casual occasions.", material:"100% Cotton", size:"S / M / L / XL / XXL", care:"Machine wash" },
+    { id:6, name:"Striped Cotton Panjabi", category:"cotton-panjabi", price:2100, oldPrice:2600, img:"cotton2.jpg", color:"#96e6a1", badge:"New",
+      desc:"Modern striped design cotton Panjabi in blue and white. A contemporary take on traditional Panjabi for the modern man.", material:"Cotton", size:"S / M / L / XL / XXL", care:"Machine wash" },
+    { id:7, name:"Eid Special Embroidered Panjabi", category:"embroidered-panjabi", price:3200, oldPrice:4000, img:"embroydary1.jpg", color:"#667eea", badge:"Eid Special",
+      desc:"Beautifully embroidered Panjabi with intricate floral patterns on collar and cuffs. Premium fabric for Eid celebrations and weddings.", material:"Muslin + Thread work", size:"S / M / L / XL / XXL", care:"Dry clean recommended" },
+    { id:8, name:"Luxury Embroidered Panjabi", category:"embroidered-panjabi", price:4500, oldPrice:5500, img:"embroydary2.jpg", color:"#f6d365", badge:"Premium",
+      desc:"Top-of-the-line embroidered Panjabi with gold and silver threadwork. Hand-stitched by master craftsmen. Perfect for weddings and formal events.", material:"Silk blend + Embroidery", size:"S / M / L / XL / XXL", care:"Dry clean only" },
+    { id:9, name:"Classic Jamdani Saree", category:"jamdani", price:3800, oldPrice:4500, img:"jamdani3.jpg", color:"#fd79a8", badge:"New",
+      desc:"Traditional Jamdani saree with classic geometric patterns. Woven by skilled artisans of Narayanganj. A perfect blend of heritage and elegance.", material:"100% Cotton", size:"6 meters", care:"Dry clean only" },
+    { id:10, name:"Festive Jamdani Saree", category:"jamdani", price:4500, oldPrice:5500, img:"jamdani4.jpg", color:"#e84393", badge:"Hot",
+      desc:"Vibrant festive Jamdani saree with rich floral borders and deep colors. Ideal for Eid, weddings and cultural events.", material:"Cotton blend", size:"6 meters", care:"Hand wash cold" },
+    { id:11, name:"Crimson Benaroshi Saree", category:"silk", price:7000, oldPrice:8500, img:"benaroshi3.jpg", color:"#e17055", badge:"Premium",
+      desc:"Gorgeous crimson Benaroshi saree with traditional zari work and fine silk weaving. A statement piece for brides and festive occasions.", material:"Pure Silk", size:"6.5 meters", care:"Dry clean only" },
+    { id:12, name:"Green Benaroshi Saree", category:"silk", price:6200, oldPrice:7500, img:"benaroshi4.jpg", color:"#00b894", badge:"New",
+      desc:"Elegant green Benaroshi saree with intricate silver border work. A refreshing color choice for modern brides and formal gatherings.", material:"Pure Silk", size:"6.5 meters", care:"Dry clean only" },
+    { id:13, name:"Navy Blue Cotton Panjabi", category:"cotton-panjabi", price:1900, oldPrice:2400, img:"cotton3.jpg", color:"#74b9ff", badge:"New",
+      desc:"Stylish navy blue cotton Panjabi with minimal design. Comfortable for daily use and casual outings. A wardrobe essential.", material:"100% Cotton", size:"S / M / L / XL / XXL", care:"Machine wash" },
+    { id:14, name:"Olive Green Cotton Panjabi", category:"cotton-panjabi", price:2000, oldPrice:2500, img:"cotton4.jpg", color:"#55efc4", badge:"Bestseller",
+      desc:"Trendy olive green cotton Panjabi with subtle texture. Perfect for casual outings and informal occasions. Lightweight and breathable.", material:"Cotton", size:"S / M / L / XL / XXL", care:"Machine wash" },
+    { id:15, name:"Wedding Embroidered Panjabi", category:"embroidered-panjabi", price:3800, oldPrice:4800, img:"embroydary3.jpg", color:"#a29bfe", badge:"Wedding",
+      desc:"Exquisite wedding-wear Panjabi with dense embroidery on chest and sleeves. Crafted for the groom who wants to stand out on his special day.", material:"Muslin + Thread work", size:"S / M / L / XL / XXL", care:"Dry clean recommended" },
+    { id:16, name:"Royal Embroidered Panjabi", category:"embroidered-panjabi", price:5000, oldPrice:6200, img:"embroydary4.jpg", color:"#fdcb6e", badge:"Premium",
+      desc:"Royal embroidered Panjabi with elaborate gold threadwork and fine finishing. The pinnacle of traditional craftsmanship for elite occasions.", material:"Silk blend + Embroidery", size:"S / M / L / XL / XXL", care:"Dry clean only" },
+];
+
+let cart = [];
+let deliveryCharge = 60;
+let sessionUser = null;  // Populated after session check
+
+// ===== RENDER PRODUCTS =====
+function renderProducts(list) {
+    const grid = document.getElementById('productsGrid');
+    const noResults = document.getElementById('noResults');
+    if (list.length === 0) {
+        grid.innerHTML = '';
+        noResults.style.display = 'flex';
+        return;
+    }
+    noResults.style.display = 'none';
+    grid.innerHTML = list.map(p => `
+        <div class="product-card" data-category="${p.category}">
+            <div class="product-img" style="background: linear-gradient(135deg, ${p.color}22, ${p.color}44)" onclick="openModal(${p.id})">
+                <img src="images/${p.img}" alt="${p.name}" style="width:100%;height:100%;object-fit:cover;display:block;">
+                ${p.badge ? `<span class="product-badge">${p.badge}</span>` : ''}
+            </div>
+            <div class="product-info">
+                <p class="product-category">${getCategoryName(p.category)}</p>
+                <h3 class="product-name" onclick="openModal(${p.id})">${p.name}</h3>
+                <div class="product-price">
+                    <span class="price-current">৳${p.price.toLocaleString()}</span>
+                    <span class="price-old">৳${p.oldPrice.toLocaleString()}</span>
+                    <span class="price-save">${Math.round((1 - p.price/p.oldPrice)*100)}% off</span>
+                </div>
+                <div class="product-actions">
+                    <button class="btn-details" onclick="openModal(${p.id})"><i class="fas fa-eye"></i> Details</button>
+                    <button class="btn-add-cart" onclick="addToCart(${p.id})"><i class="fas fa-shopping-bag"></i> Add to Cart</button>
+                </div>
+            </div>
+        </div>
+    `).join('');
+}
+
+function getCategoryName(cat) {
+    const map = { 'jamdani':'Jamdani Saree', 'silk':'Silk Saree', 'cotton-panjabi':'Cotton Panjabi', 'embroidered-panjabi':'Embroidered Panjabi' };
+    return map[cat] || cat;
+}
+
+// ===== FILTER =====
+let currentFilter = 'all';
+
+function filterProducts(category, btn) {
+    currentFilter = category;
+    if (btn) {
+        document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+        btn.classList.add('active');
+    }
+    const filtered = category === 'all' ? products : products.filter(p => p.category === category);
+    renderProducts(filtered);
+    document.getElementById('products').scrollIntoView({ behavior: 'smooth' });
+}
+
+// ===== SEARCH =====
+function searchProducts() {
+    const query = document.getElementById('searchInput').value.toLowerCase();
+    if (!query) { filterProducts(currentFilter); return; }
+    const filtered = products.filter(p =>
+        p.name.toLowerCase().includes(query) ||
+        p.category.toLowerCase().includes(query) ||
+        p.desc.toLowerCase().includes(query)
+    );
+    renderProducts(filtered);
+    document.getElementById('products').scrollIntoView({ behavior: 'smooth' });
+}
+
+function toggleSearch() {
+    const bar = document.getElementById('searchBar');
+    bar.classList.toggle('active');
+    if (bar.classList.contains('active')) document.getElementById('searchInput').focus();
+}
+
+function closeSearch() {
+    document.getElementById('searchBar').classList.remove('active');
+    document.getElementById('searchInput').value = '';
+    filterProducts(currentFilter);
+}
+
+// ===== MODAL =====
+function openModal(id) {
+    const p = products.find(x => x.id === id);
+    const inCart = cart.find(x => x.id === id);
+    document.getElementById('modalContent').innerHTML = `
+        <div class="modal-img" style="background: linear-gradient(135deg, ${p.color}22, ${p.color}55)">
+            <img src="images/${p.img}" alt="${p.name}" style="width:100%;height:100%;object-fit:cover;display:block;">
+        </div>
+        <div class="modal-details">
+            <p class="product-category">${getCategoryName(p.category)}</p>
+            <h2>${p.name}</h2>
+            <div class="product-price" style="margin:15px 0">
+                <span class="price-current" style="font-size:28px">৳${p.price.toLocaleString()}</span>
+                <span class="price-old">৳${p.oldPrice.toLocaleString()}</span>
+                <span class="price-save">${Math.round((1 - p.price/p.oldPrice)*100)}% off</span>
+            </div>
+            <p class="modal-desc">${p.desc}</p>
+            <div class="modal-specs">
+                <div><i class="fas fa-tshirt"></i> <strong>Material:</strong> ${p.material}</div>
+                <div><i class="fas fa-ruler"></i> <strong>Size:</strong> ${p.size}</div>
+                <div><i class="fas fa-hands-wash"></i> <strong>Care:</strong> ${p.care}</div>
+            </div>
+            <div class="modal-actions">
+                <button class="btn-add-cart" onclick="addToCart(${p.id}); closeModal()">
+                    <i class="fas fa-shopping-bag"></i> ${inCart ? 'Add Again' : 'Add to Cart'}
+                </button>
+                <button class="btn-outline" onclick="closeModal()">
+                    <i class="fas fa-arrow-left"></i> Back
+                </button>
+            </div>
+        </div>
+    `;
+    document.getElementById('modalOverlay').classList.add('active');
+    document.getElementById('productModal').classList.add('active');
+    document.body.style.overflow = 'hidden';
+}
+
+function closeModal() {
+    document.getElementById('modalOverlay').classList.remove('active');
+    document.getElementById('productModal').classList.remove('active');
+    document.body.style.overflow = '';
+}
+
+// ===== CART =====
+function addToCart(id) {
+    const p = products.find(x => x.id === id);
+    const existing = cart.find(x => x.id === id);
+    if (existing) { existing.qty++; }
+    else { cart.push({ ...p, qty: 1 }); }
+    updateCart();
+    showToast(`✅ "${p.name}" added to cart!`);
+}
+
+function removeFromCart(id) {
+    cart = cart.filter(x => x.id !== id);
+    updateCart();
+}
+
+function changeQty(id, delta) {
+    const item = cart.find(x => x.id === id);
+    if (!item) return;
+    item.qty += delta;
+    if (item.qty <= 0) removeFromCart(id);
+    else updateCart();
+}
+
+function updateCart() {
+    const count = cart.reduce((s, x) => s + x.qty, 0);
+    document.getElementById('cartCount').textContent = count;
+    document.getElementById('cartCount').style.display = count > 0 ? 'flex' : 'none';
+
+    const cartItems  = document.getElementById('cartItems');
+    const cartFooter = document.getElementById('cartFooter');
+
+    if (cart.length === 0) {
+        cartItems.innerHTML = `<div class="cart-empty"><i class="fas fa-shopping-bag"></i><p>Your cart is empty</p></div>`;
+        cartFooter.style.display = 'none';
+        return;
+    }
+
+    cartItems.innerHTML = cart.map(item => `
+        <div class="cart-item">
+            <div class="cart-item-img"><img src="images/${item.img}" alt="${item.name}" style="width:100%;height:100%;object-fit:cover;border-radius:8px;"></div>
+            <div class="cart-item-info">
+                <p class="cart-item-name">${item.name}</p>
+                <p class="cart-item-price">৳${item.price.toLocaleString()}</p>
+                <div class="qty-control">
+                    <button onclick="changeQty(${item.id}, -1)">−</button>
+                    <span>${item.qty}</span>
+                    <button onclick="changeQty(${item.id}, 1)">+</button>
+                </div>
+            </div>
+            <button class="cart-item-remove" onclick="removeFromCart(${item.id})"><i class="fas fa-trash"></i></button>
+        </div>
+    `).join('');
+
+    cartFooter.style.display = 'block';
+    updateCartTotal();
+}
+
+function updateCartTotal() {
+    const subtotal = cart.reduce((s, x) => s + x.price * x.qty, 0);
+    const total    = subtotal + deliveryCharge;
+    document.getElementById('cartSubtotal').textContent = '৳' + subtotal.toLocaleString();
+    document.getElementById('deliveryCharge').textContent = '৳' + deliveryCharge;
+    document.getElementById('cartTotal').textContent = '৳' + total.toLocaleString();
+}
+
+function updateDelivery(el) {
+    deliveryCharge = parseInt(el.value);
+    updateCartTotal();
+}
+
+function toggleCart() {
+    document.getElementById('cartSidebar').classList.toggle('active');
+    document.getElementById('cartOverlay').classList.toggle('active');
+    document.body.style.overflow = document.getElementById('cartSidebar').classList.contains('active') ? 'hidden' : '';
+}
+
+// ===== ORDER =====
+function placeOrder() {
+    const name    = document.getElementById('orderName').value.trim();
+    const phone   = document.getElementById('orderPhone').value.trim();
+    const address = document.getElementById('orderAddress').value.trim();
+
+    if (!name || !phone || !address) {
+        showToast('⚠️ Please fill in all delivery information!', 'warning');
+        return;
+    }
+    if (cart.length === 0) {
+        showToast('⚠️ Your cart is empty!', 'warning');
+        return;
+    }
+
+    const subtotal  = cart.reduce((s, x) => s + x.price * x.qty, 0);
+    const total     = subtotal + deliveryCharge;
+    const orderData = {
+        customer: { name, phone, address },
+        items:    cart,
+        subtotal,
+        delivery: deliveryCharge,
+        total,
+        payment:  'Cash on Delivery',
+        date:     new Date().toLocaleString('en-BD')
+    };
+
+    fetch('php/order.php', {
+        method:  'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body:    JSON.stringify(orderData)
+    })
+    .then(r => r.json())
+    .then(data => {
+        if (data.success) {
+            cart = [];
+            updateCart();
+            toggleCart();
+            showOrderSuccess(data.order_id, total, name);
+        } else {
+            showToast('❌ Order failed: ' + data.message, 'error');
+        }
+    })
+    .catch(() => {
+        // Demo fallback
+        cart = [];
+        updateCart();
+        toggleCart();
+        showOrderSuccess('RD' + Date.now(), total, name);
+    });
+}
+
+function showOrderSuccess(orderId, total, name) {
+    document.getElementById('modalContent').innerHTML = `
+        <div class="order-success">
+            <div class="success-icon">🎉</div>
+            <h2>Order Placed Successfully!</h2>
+            <p>Thank you <strong>${name}</strong>! Your order has been received.</p>
+            <div class="order-info">
+                <p><strong>Order ID:</strong> ${orderId}</p>
+                <p><strong>Total Amount:</strong> ৳${total.toLocaleString()}</p>
+                <p><strong>Payment:</strong> Cash on Delivery</p>
+                <p><strong>Expected Delivery:</strong> 3–5 Business Days</p>
+            </div>
+            <p class="success-note">Our team will contact you shortly. Thank you for shopping with Ranga Dhaga! 🛍️</p>
+            ${sessionUser ? `<a href="profile.html" style="display:inline-flex;align-items:center;gap:8px;margin-top:12px;padding:12px 24px;background:linear-gradient(135deg,#c44569,#ff6b9d);color:#fff;border-radius:50px;font-weight:600;text-decoration:none;"><i class="fas fa-box"></i> Track Order</a>` : ''}
+            <button class="btn-primary" onclick="closeModal()" style="margin-left:10px;">Continue Shopping</button>
+        </div>
+    `;
+    document.getElementById('modalOverlay').classList.add('active');
+    document.getElementById('productModal').classList.add('active');
+    document.body.style.overflow = 'hidden';
+}
+
+// ===== NAVBAR SCROLL =====
+window.addEventListener('scroll', () => {
+    document.getElementById('navbar').classList.toggle('scrolled', window.scrollY > 50);
+});
+
+// ===== MENU =====
+function toggleMenu() {
+    document.getElementById('navLinks').classList.toggle('active');
+    document.getElementById('hamburger').classList.toggle('open');
+}
+
+function scrollToProducts() {
+    document.getElementById('products').scrollIntoView({ behavior: 'smooth' });
+}
+
+// ===== USER DROPDOWN =====
+function toggleUserDropdown() {
+    const menu = document.getElementById('userDropdownMenu');
+    if (menu) menu.classList.toggle('open');
+}
+
+// Close dropdown when clicking outside
+document.addEventListener('click', (e) => {
+    const menu = document.getElementById('userDropdownMenu');
+    if (menu && !e.target.closest('.nav-user-dropdown')) {
+        menu.classList.remove('open');
+    }
+});
+
+// ===== SESSION CHECK — update navbar =====
+fetch('php/check_session.php')
+.then(r => r.json())
+.then(data => {
+    const userMenu = document.getElementById('userMenu');
+    if (data.logged_in) {
+        sessionUser = data;
+        const firstLetter = data.user_name.charAt(0).toUpperCase();
+        userMenu.innerHTML = `
+            <div class="nav-user-dropdown">
+                <button class="nav-login-btn" onclick="toggleUserDropdown()" title="${data.user_name}"
+                    style="width:38px;height:38px;border-radius:50%;background:linear-gradient(135deg,#c44569,#ff6b9d);color:#fff;font-weight:700;font-size:15px;display:flex;align-items:center;justify-content:center;border:none;cursor:pointer;">
+                    ${firstLetter}
+                </button>
+                <div class="user-dropdown-menu" id="userDropdownMenu">
+                    <p class="dropdown-username">Hi, ${data.user_name.split(' ')[0]}!</p>
+                    <a href="profile.html"><i class="fas fa-user-circle"></i> My Profile</a>
+                    <a href="profile.html#orders" onclick="localStorage.setItem('profileTab','orders')"><i class="fas fa-box"></i> My Orders</a>
+                    <a href="php/logout.php"><i class="fas fa-sign-out-alt"></i> Logout</a>
+                </div>
+            </div>
+        `;
+        // Pre-fill order name from session
+        const nameInput = document.getElementById('orderName');
+        if (nameInput && !nameInput.value) nameInput.value = data.user_name;
+    }
+})
+.catch(() => { /* Not logged in or server unavailable — keep default login button */ });
+
+// ===== TOAST =====
+function showToast(msg, type = 'success') {
+    const toast = document.getElementById('toast');
+    toast.textContent = msg;
+    toast.className = 'toast show ' + type;
+    setTimeout(() => toast.className = 'toast', 3000);
+}
+
+// ===== CONTACT FORM — sends to php/contact.php via fetch =====
+function submitContact(e) {
+    e.preventDefault();
+    const form = e.target;
+    const btn  = document.getElementById('contactBtn');
+    const fd   = new FormData(form);
+
+    btn.disabled    = true;
+    btn.textContent = 'Sending…';
+
+    fetch('php/contact.php', { method: 'POST', body: fd })
+    .then(r => r.json())
+    .then(data => {
+        if (data.success) {
+            showToast('✅ Message sent! We will contact you soon.');
+            form.reset();
+        } else {
+            showToast('❌ ' + (data.message || 'Failed to send. Please try again.'), 'error');
+        }
+    })
+    .catch(() => {
+        showToast('❌ Network error. Please try again.', 'error');
+    })
+    .finally(() => {
+        btn.disabled    = false;
+        btn.textContent = 'Send Message';
+    });
+}
+
+// ===== INIT =====
+renderProducts(products);
+document.getElementById('cartCount').style.display = 'none';
+
+</script>
+</body>
+</html>
